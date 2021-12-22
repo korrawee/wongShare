@@ -1,0 +1,24 @@
+<div class="flex flex-col w-full">
+    <h1>show baan number <%=@baanId%></h1>
+
+    <%# Action bar %>
+    <div class="flex justify-end">
+        <%= link_to "สร้างวง", wongshare_new_path, :class => "w-20 rounded-xl px-2 cursor-pointer text-xl bg-green-400 hover:bg-green-500"%>
+    </div>
+    <%# Data Table %>
+    <table class="table-fixed border-collapse border border-gray-400 text-sm">
+        <thead>
+            <tr>
+                <td>ชื่อวง</td>
+                <td class="hidden md:block">ประเภท</td>
+                <td class="">เงินต้น</td>
+                <td class="hidden md:block">ยอดส่ง</td>
+                <td>งวดต่อไป</td>
+                <td>จัดการ</td>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,2 @@
+module BannshareHelper
+end
