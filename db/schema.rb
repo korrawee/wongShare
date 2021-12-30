@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_16_041945) do
+ActiveRecord::Schema.define(version: 2021_12_24_143154) do
 
   create_table "accounts", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -30,10 +30,43 @@ ActiveRecord::Schema.define(version: 2021_12_16_041945) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
+    t.integer "baan_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["baan_id"], name: "index_accounts_on_baan_id"
     t.index ["email"], name: "index_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true
+  end
+
+  create_table "baans", force: :cascade do |t|
+    t.string "name"
+    t.string "tel"
+    t.integer "account_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_baans_on_account_id"
+  end
+
+  create_table "wongs", force: :cascade do |t|
+    t.string "name"
+    t.string "wong_type"
+    t.string "fee_type"
+    t.integer "deposite"
+    t.integer "income"
+    t.integer "people"
+    t.integer "interest"
+    t.integer "paid", default: 0
+    t.integer "bit", default: 0
+    t.integer "bit_at"
+    t.integer "discount_tracking"
+    t.integer "fee"
+    t.integer "play_cycle"
+    t.integer "period"
+    t.date "start_date"
+    t.integer "baan_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["baan_id"], name: "index_wongs_on_baan_id"
   end
 
 end

@@ -1,19 +1,20 @@
 <div class="flex justify-start md:max-w-5xl overflow-x-scroll overscroll-x-contain mb-5">
-    <% 10.times do |index|%>
-        <%# Card %>
-        <a href=<%="/baanshare/#{index}"%>>
-        <div class="flex flex-col  md:w-32 h-48 min-w-max mx-3 my-1 text-center  rounded-md overflow-hidden shadow-xl  ">
-            <div class=" p-2 w-full h-3/5 bg-gray-200 text-gray-700">
-                <h1 class="font-bold text-xl tracking-wide">บ้านริมทะเล</h1>
-                <div class="px-1 my-2 text-left text-xs font-light text-gray-700 text-opacity-90">
-                    <p>วงทั้งหมด: 30,000.-</p>
-                    <p>มือเป็น:</p>
-                    <p>มือตาย:</p>
+    <% if defined?(baans)%>
+        <% baans.each do |baan|%>
+            <%# Card %>
+            <a href=<%= baanshare_path(baan.id)%>>
+            <div class="flex flex-col  md:w-32 h-48 min-w-max mx-3 my-1 text-center  rounded-md overflow-hidden shadow-xl  ">
+                <div class=" p-2 w-full h-3/5 bg-gray-200 text-gray-700">
+                    <h1 class="font-bold text-xl tracking-wide"><%=baan.name%></h1>
+                    <div class="px-1 my-2 text-left text-xs font-light text-gray-700 text-opacity-90">
+                        <p>วงทั้งหมด: <span><%=baan.getWongCount%></span></p>
+                        <p>มือเป็น: <span><%=baan.getAvailable%></span></p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center w-full h-2/5 bg-green-500 text-gray-50 text-2xl font-normal ">
+                    <h1><span><%=baan.getTodayIncome()%></span></h1>
                 </div>
             </div>
-            <div class="flex items-center justify-center w-full h-2/5 bg-green-500 text-gray-50 text-2xl font-normal ">
-                <h1>7,000</h1>
-            </div>
-        </div>
+        <%end%>
     <%end%>
 </div>
