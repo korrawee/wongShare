@@ -16,6 +16,8 @@ class WongsharesController < ApplicationController
     puts @currentCycle
     puts @playDate
     puts "================================"
+
+    
   end
   def update
     @wong = Wong.find_by_id(params[:id])
