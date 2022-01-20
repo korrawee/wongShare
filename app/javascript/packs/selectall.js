@@ -1,5 +1,5 @@
 import Rails from "@rails/ujs"
-
+import $ from 'jquery'
 var checkbox_all = document.querySelector('.checkbox_all');
 var checkboxes = document.querySelectorAll(".checkbox");
 var del_button = document.querySelector(".del-btn")
@@ -8,7 +8,7 @@ var checked = []
 console.log(checkboxes);
 checkbox_all.addEventListener('click',(event)=>{
     console.log(event.target.checked)
-    
+    checked = []
     // check whether checkboxes are selected.
     if(event.target.checked){
         // if they are selected, unchecking all the checkbox
@@ -49,14 +49,14 @@ checkboxes.forEach((checkbox)=>{
 })
 
 del_button.addEventListener('click',()=>{
-
+    console.log(JSON.stringify(checked))
     //Ajax send selected row to baanshares_controller
-    Rails.ajax({
-        url: window.location.href,
-        type: 'post',
+    $.ajax({
+        url: window.location.href+"/delete",
+        type: 'get',
         dataType: "script",
-        data: {"checkboxes": checked},
-        success:function(data){console.log('ajax success');
+        data: {'checked': checked},
+        success:function(data){console.log('ajax success',data);
         },
         error: function(data){console.log(data)},
     });

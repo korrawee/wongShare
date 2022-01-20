@@ -15,12 +15,17 @@ class BaansharesController < ApplicationController
 
     def delete
         @baanId = params[:id]
-        baan = Baan.find_by_id(@baanId)
+        baan = Baan.find_by_id(@baanId)        
+        puts '88888888888888'
+        puts params[:checked][0]
+        puts '88888888888888'       
+        baan.delete(params[:checked]) if params[:checked].length > 0
         @wongs = baan.getAllWong
-        puts '88888888888888'
-        puts params
-        puts '88888888888888'
-        render json: {html: render_to_string(partial: 'table')} 
+        respond_to do |format|
+            format.html {}
+            format.js {}
+            format.json {}
+        end
     end
 
     def pay

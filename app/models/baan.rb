@@ -2,6 +2,12 @@ class Baan < ApplicationRecord
     has_many :wongs
     has_one :account
 
+    def delete(ids)
+        ids.each do |id|
+            Wong.find_by_id(id.to_i).destroy
+        end
+    end
+    
     def getAvailable()
         count = 0
         wongs.each do |w|

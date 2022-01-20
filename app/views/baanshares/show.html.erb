@@ -22,8 +22,10 @@
         text-md text-gray-100
         shadow-md"%>
     </div>
-    <div class='container'></div>
-    <%=render partial: 'table', locals:{wongs:@wongs, baanId:@baanId}, class:'partial'%>
-        <%= button_tag 'ลบ', class:'del-btn flex justify-end'%>
+    <div class='contain'>
+        <%=render partial: 'table', locals:{wongs:@wongs, baanId:@baanId}, class:'partial'%>
+    </div>
+    
+        <%= button_tag 'ลบ', class:'del-btn flex justify-end',data: {confirm: "ยืนยันการลบวง?"}, remote: true%>
 </div>
 <%= javascript_pack_tag 'selectall', 'data-turbolinks-track': 'reload' %>
