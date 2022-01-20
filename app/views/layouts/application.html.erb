@@ -11,7 +11,6 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-   
   </head>
 
   <body>
@@ -21,7 +20,7 @@
       <div class="h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-white dark:bg-gray-700 text-black dark:text-white overflow-hidden transition-all duration-300 ">
         <!-- Header -->
         <div class="w-full flex items-center justify-between h-14 text-white">
-          <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-800 dark:bg-gray-800 transition-all duration-300 border-none">
+          <div class="flex items-center justify-start md:justify-center pl-3 w-14 md:w-64 h-14 bg-blue-900 dark:bg-gray-800 transition-all duration-300 border-none">
             <img class="w-7 h-7 md:w-10 md:h-10 mr-2 rounded-md overflow-hidden" src="https://therminic2018.eu/wp-content/uploads/2018/07/dummy-avatar.jpg" />
             <span class="hidden md:block"><%= current_account.email%></span>
           </div>
@@ -35,6 +34,7 @@
             <p class="notice"><%= notice %></p>
             <p class="alert"><%= alert %></p>
             <p class="flash text-green-300"><%=flash[:success]%></p>
+            <p class="flash text-red-500"><%=flash[:error]%></p>
             <ul class="flex items-center">
               <li>
                 <button
@@ -96,7 +96,9 @@
 
         <div class="flex flex-row max-h-full h-full transition-all duration-300">
           <!-- Sidebar -->
-          <div class=" flex flex-col w-14 h-full hover:w-64 md:w-64 bg-blue-900 dark:bg-gray-900  text-white transition-all duration-300 border-none sidebar">
+          <div class=" flex flex-col w-14 h-full hover:w-64 md:w-64
+                      bg-blue-900 dark:bg-gray-800
+                      text-white transition-all duration-300 border-none sidebar">
             <div class="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow">
               <ul class="flex flex-col py-4 space-y-1">
                 <li class="px-5 hidden md:block">
@@ -113,7 +115,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href=<%= baanshares_path%> class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                  <a href=<%= baanshares_path(id:current_account.id)%> class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
                     <span class="inline-flex justify-center items-center ml-4">
                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
                     </span>

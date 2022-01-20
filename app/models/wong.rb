@@ -4,6 +4,39 @@ class Wong < ApplicationRecord
 
     before_create :setFirstDiscount
 
+    attr_accessor :should_validate
+    validates :name, presence: true, uniqueness:{message: 'ชื่อนี้ถูกใช้แล้ว'},on: :update, if: lambda { should_validate.present? }
+    validates :wong_type, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :deposite, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :people, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :interest, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :fee, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :fee_type, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :start_date, presence: true, on: :update, if: lambda { should_validate.present? }
+    validates :period, presence: true, on: :update, if: lambda { should_validate.present? }
+    
+    def unpayCycle()
+        count = 0
+        alreadyPaid = paid
+        cycle = getCurrentCycle()
+        return count if cycle == 0 
+        if paid != 0
+            alreadyPaid -= fee if fee_type === "จ่ายงวดแรก"
+            alreadyPaid -= bit if bit > 0
+
+            paidCycle = paid / interest
+            count = cycle - paidCycle
+
+            return count
+        else
+            return cycle
+        end
+        
+    end
+    def self.should_validate()
+        should_validate = true
+    end
+
     def nextCycle()
         currentCycle = Wong.getCurrentCycleById(id)
         date = start_date + (currentCycle+1) * period
@@ -133,10 +166,7 @@ class Wong < ApplicationRecord
         if (days % period == 0)
             amt = days / period
         else
-            amt = (days / period).floor
-            if amt < 1
-                amt = 1
-            end
+            amt = (days / period).floor + 1
         end
         amt
     end

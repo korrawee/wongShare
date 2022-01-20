@@ -1,43 +1,111 @@
 <div class="flex flex-col w-full my-5 text-black dark:text-gray-50">
-    <div class="flex flex-row justify-between content-center">
-        <h1 class=" text-xl">รายละเอียดวงแชร์: <span class="tracking-wider font-bold dark:text-gray-50 text-gray-800"><%= @wong.name%></span></h1>  
-        <div class="flex justify-between w-1/6 ">
-            <%= link_to 'กลับ', baanshare_path(@baanId),class: 'border rounded-lg px-4 border-8 border-gray-400 hover:underline hover:shadow-md'%>
-            <%= link_to 'แก้ไข', edit_wongshare_path, class: 'border rounded-lg px-4 border-8 border-green-400 hover:underline hover:shadow-md'%>
+    <div class="flex flex-row flex-wrap justify-between content-center">
+        <div class="flex flex-row">
+            <h1 class="text-xl min-w-max">รายละเอียดวงแชร์: <span class="tracking-wider font-bold dark:text-gray-50 text-gray-800"><%= @wong.name%></span></h1>  
+            <%if @wong.unpayCycle() != 0%>
+                <h1 class="min-w-max mx-5 flex flex-row ">คุณมียอดค้างชำระ (<%= @wong.unpayCycle()%> งวด):  
+                    <span class="tracking-wide text-gray-900 font-semibold">
+                        <%= form_with model: @wong, url: pay_wongshare_path(@wong.id,:baanId => @baanId), method: :post, local: true, 
+                        class: "flex flex-row min-w-max ml-2" do |f| %>
+                                <%=f.number_field :cycle, max: @wong.unpayCycle(), value: @wong.unpayCycle(), class: 'border-b-2 focus:border-green-500 text-center outline-none w-20'%>
+                                <%=f.submit 'ชำระ', class: '
+                                transition-all duration-200 
+                                border border-green-500 rounded-sm
+                                mx-2 px-4 cursor-pointer 
+                                text-md text-gray-100 
+                                bg-green-500
+                                hover:text-white hover:bg-green-600 hover:border-green-600
+                                shadow-md'%>
+                            <% end %>
+                    </span>
+                </h1>
+            <%end%>
+        </div>
+        <div class="flex items-center">
+            <%= link_to 'กลับ', baanshare_path(@baanId),class: '
+            min-w-max
+            max-h-full 
+            transition-all duration-200 
+            border rounded-sm border-8 border-green-500 
+            px-8 mx-1 
+            cursor-pointer
+            bg-white
+            text-md text-gray-900
+            shadow-md'%>
+            <%= link_to 'แก้ไข', edit_wongshare_path(@wong.id,:baanId => @baanId), class: ' 
+            transition-all duration-200 
+            border rounded-sm border-8 border-green-500 
+            px-8 mx-1 
+            cursor-pointer
+            bg-green-500
+            text-md text-gray-100
+            hover:text-white hover:bg-green-600 hover:border-green-600
+            shadow-md'%>
         </div>
     </div>
     <div class="grid grid-cols-2 mt-5 h-4/5 text-lg ">
         <div class="flex flex-col justify-around">
             <div><h1>บ้าน:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @baanName%></span></h1></div>
             <div><h1>ประเภท:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.wong_type%></span></h1></div>
-            <div><h1>เงินต้น:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.deposite%></span></h1></div>
-            <div><h1>จำนวนมือ:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.people%></span></h1></div>
-            <div><h1>ยอดส่ง:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.interest%></span></h1></div>
-            <div><h1>ค่าดูแล:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.fee%></span></h1></div>
+            <div><h1>เงินต้น:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.deposite%></span> บาท</h1></div>
+            <div><h1>จำนวนมือทั้งหมด:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.people%></span> คน</h1></div>
+            <div><h1>ยอดส่ง:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.interest%></span> บาท</h1></div>
+            <div><h1>ค่าดูแล:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.fee%></span> บาท</h1></div>
             <div><h1>รูปแบบค่าดูแล:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.fee_type%></span></h1></div>
         </div>
         <div class="flex flex-col justify-around">
-            <div><h1>ดอกที่ได้รับ:  <span class="tracking-wide text-gray-900 font-semibold"><%= form_with model: @wong, url: wongshare_path(@wong.id,:baanId =>@baanId), method: :patch, local: true, class: "inline" do |f| %>
-                <%=f.text_field :income, class: 'border text-center'%>
-                <%=f.submit 'ยืนยัน', class: 'border border-l-none rounded-l-none bg-white rounded-lg px-4 border-8 border-green-400 hover:bg-green-100 cursor-pointer'%>
-            <% end %>
-            </span></h1></div>
+            <div>
+                <% if @wong.wong_type === "ขั้นบันได" || @wong.wong_type === "ดอกตาม"%>
+                    <h1 class="opacity-50">ดอกที่ได้รับ:  <span class="pointer-events-none tracking-wide text-gray-900 font-semibold"><%= form_with model: @wong, url: wongshare_path(@wong.id,:baanId =>@baanId), method: :patch, local: true, class: "inline" do |f| %>
+                    <%=f.text_field :income, class: 'border w-20 text-center outline-none '%>
+                    <%=f.submit 'ยืนยัน', class: '
+                    transition-all duration-200 
+                    border border-green-500 rounded-sm
+                    mx-1 px-4 cursor-pointer 
+                    text-md text-gray-100 
+                    bg-green-500
+                    hover:text-white hover:bg-green-600 hover:border-green-600
+                    shadow-md'%>
+                    <% end %>
+                    </span></h1>
+                <%else%>
+                    <h1>ดอกที่ได้รับ:  <span class="tracking-wide text-gray-900 font-semibold"><%= form_with model: @wong, url: wongshare_path(@wong.id,:baanId =>@baanId), method: :patch, local: true, class: "inline" do |f| %>
+                        <%=f.text_field :income, class: 'border-b-2 w-20 focus:border-green-500 text-center outline-none'%>
+                        <%=f.submit 'ยืนยัน', class: '
+                        transition-all duration-200 
+                        border border-green-500 rounded-sm
+                        mx-1 px-4 cursor-pointer
+                        text-md text-gray-100 
+                        bg-green-500
+                        hover:text-white hover:bg-green-600 hover:border-green-600
+                        shadow-md'%>
+                    <% end %>
+                    </span></h1>
+                <%end%>
+            </div>
             <div><h1>งวดแรก:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.start_date%></span></h1></div>
-            <div><h1>ระยะเวลาต่องวด:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.period%></span></h1></div>
+            <div><h1>ระยะเวลาต่องวด:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.period%></span> วัน</h1></div>
             <div><h1>งวดปัจจุบัน:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.getCurrentCycle()%></span></h1></div>
-            <div><h1>งวดที่เล่น:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.play_cycle%></span></h1></div>
-            <div><h1>วันที่เล่น:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.getPlayDate()%></span></h1></div>
+            <div><h1>งวดคงเหลือ:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.people - @wong.getCurrentCycle()%></span> งวด</h1></div>
+            <div><h1>งวดได้รับ:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.play_cycle%></span></h1></div>
+            <div><h1>วันที่เปียร์:  <span class="tracking-wide dark:text-gray-50 text-gray-900 font-semibold"><%= @wong.getPlayDate()%></span></h1></div>
         </div>
     </div>
-    <div class="flex flex-row flex-warp items-end justify-around h-1/4 text-lg">
-        <div class="rounded border-b-4 border-red-600 p-4 bg-red-400"><h1 class="text-gray-900">ยอดชำระทั้งหมด:  <span class="tracking-wide text-gray-900 font-semibold"><%= @wong.getTotalCost()%></span></h1></div>
-        <div class="rounded border-b-4 border-yellow-600 p-4 bg-yellow-400"><h1 class="text-gray-900">ยอดชำระแล้ว:  <span class="tracking-wide text-gray-900 font-semibold"><%= @wong.paid%></span></h1></div>
-        <div class="rounded border-b-4 border-gray-600 p-4 bg-gray-400"><h1 class="text-gray-900">ยอดชำระคงเหลือ:  <span class="tracking-wide text-gray-900 font-semibold"><%= @wong.getTotalCost() - @wong.paid%></span></h1></div>
-        <div class="rounded border-b-4 border-green-600 p-4 bg-green-400"><h1 class="text-gray-900">กำไรหลังจบวง:  <span class="tracking-wide text-gray-900 font-bold"><% if (@wong.deposite + @wong.income) - @wong.getTotalCost() > 0%>
-            <span class="">+<%=(@wong.deposite + @wong.income) - @wong.getTotalCost()%></span>
+    <div class="flex flex-row flex-warp items-end justify-evenly h-1/4 text-lg">
+        <div class="shadow-md rounded py-4 px-5 bg-gradient-to-b from-red-400 to-red-500"><h1 class="text-gray-900">ยอดชำระทั้งหมด:  <span class="tracking-wide text-gray-900 font-semibold"><%= @wong.getTotalCost()%></span></h1></div>
+        <div class="shadow-md rounded py-4 px-5 bg-gradient-to-b from-yellow-400 to-yellow-500"><h1 class="text-gray-900">ยอดชำระแล้ว:  <span class="tracking-wide text-gray-900 font-semibold"><%= @wong.paid%></span></h1></div>
+        <div class="shadow-md rounded py-4 px-5 bg-gradient-to-b from-gray-400 to-gray-500"><h1 class="text-gray-900">ยอดชำระคงเหลือ:  <span class="tracking-wide text-gray-900 font-semibold"><%= @wong.getTotalCost() - @wong.paid%></span></h1></div>
+        
+        <% if (@wong.deposite + @wong.income) - @wong.getTotalCost() > 0%>
+            <div class="shadow-md rounded py-4 px-5 bg-green-400"><h1 class="text-gray-900">กำไรหลังจบวง:  <span class="tracking-wide text-gray-900 font-bold">
+            +<%=(@wong.deposite + @wong.income) - @wong.getTotalCost()%>
+            </span></h1>
+            </div>
         <%else%>
-            <span class=""><%=(@wong.deposite + @wong.income) - @wong.getTotalCost()%></span>
+            <div class="shadow-md rounded py-4 px-5 bg-gradient-to-b from-red-400 to-red-500"><h1 class="text-gray-900">กำไรหลังจบวง:  <span class="tracking-wide text-gray-900 font-bold">
+                <%=(@wong.deposite + @wong.income) - @wong.getTotalCost()%>
+                </span></h1>
+            </div>
         <%end%>
-        </span ></h1></div>
     </div>
 </div>

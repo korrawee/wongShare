@@ -4,6 +4,7 @@ class MainController < ApplicationController
         @acc = current_account
         @baansToday = Baan.getAllBaanToday(@acc.id)
         @baansOtherDay = Baan.getAllBaanOtherday(@acc.id)
+        @baans = Baan.all
         puts '%%%%%%%%%%%%%%%%%%%'
         puts @baansOtherDay.class
         puts '%%%%%%%%%%%%%%%%%%%'

@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_143154) do
     t.string "wong_type"
     t.string "fee_type"
     t.integer "deposite"
-    t.integer "income"
+    t.integer "income", default: 0
     t.integer "people"
     t.integer "interest"
     t.integer "paid", default: 0
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_143154) do
     t.integer "fee"
     t.integer "play_cycle"
     t.integer "period"
+    t.boolean "status", default: false
     t.date "start_date"
     t.integer "baan_id"
     t.datetime "created_at", precision: 6, null: false

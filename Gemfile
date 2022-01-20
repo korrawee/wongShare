@@ -46,6 +46,7 @@ group :development do
   gem 'spring'
   gem 'foreman'
   gem 'letter_opener'
+  gem 'jquery-rails'
 end
 
 group :test do

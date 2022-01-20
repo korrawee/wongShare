@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center md:items-start items-center w-full divide-y">
+<div class="flex flex-col md:items-start items-center w-full divide-y">
     <% if account_signed_in? %>
         <div class="w-full mb-5">
             <h1 class="hidden md:block my-2 text-xl text-gray-700 dark:text-gray-100">ยอดคงเหลือวันนี้</h1>
@@ -7,15 +7,15 @@
                 <%= render partial: "dashboard"%>
             </div>
         </div>
-        <div class="max-w-full">
+        <div class="w-full">
             <h1 class="mt-5 text-xl text-gray-700 dark:text-gray-100">รายการวันนี้</h1>
             <div class="flex md:w-full items-center ">
                 <%= render partial: "/shared/card", locals: {baans: @baansToday}%>
             </div>
         </div>
-        <div class="max-w-full">
+        <div class="w-full">
             <h1 class="mt-5 text-xl text-gray-700 dark:text-gray-100">รายการอื่น ๆ</h1>
-            <div class="flex md:w-full items-center max-w-full mb-10">
+            <div class="flex md:w-full items-center max-w-full mb">
                 <%= render partial: "/shared/card", locals: {baans: @baansOtherDay}%>
             </div>
         </div>
