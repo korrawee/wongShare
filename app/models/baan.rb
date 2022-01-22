@@ -38,7 +38,7 @@ class Baan < ApplicationRecord
         wongs.each do |w|
            total += w.getTodayProfit()
         end
-        if total ==0
+        if total == 0
             return '-'
         end
         total

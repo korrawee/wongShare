@@ -4,7 +4,7 @@
             <% baans.each do |baan|%>
                 <%# Card %>
                 <a href=<%= baanshare_path(baan.id)%>>
-                <div class="flex flex-col  md:w-32 h-48 min-w-max mx-3 my-1 text-center rounded-md overflow-hidden shadow-lg border-b-4 border-green-600   ">
+                <div class="flex flex-col  md:w-32 h-48 min-w-max mx-3 my-1 text-center rounded-md overflow-hidden shadow-lg border-b-4">
                     <div class=" p-2 w-full h-3/5 bg-gradient-to-b from-gray-50 to-gray-200 text-gray-700">
                         <h1 class="font-bold text-xl tracking-wide"><%=baan.name%></h1>
                         <div class="px-1 my-2 text-left text-xs font-light text-gray-700 text-opacity-90">
@@ -12,11 +12,26 @@
                             <p>มือเป็น: <span><%=baan.getAvailable%></span></p>
                         </div>
                     </div>
-                    <div class="flex items-center justify-center w-full h-2/5 
-                    bg-gradient-to-b from-green-400 to-green-500
-                    text-gray-50 text-2xl font-normal ">
-                        <h1><span><%=baan.getTodayIncome()%></span></h1>
-                    </div>
+                    <% if baan.getTodayIncome() === '-'%>
+                        <div class="flex items-center justify-center w-full h-2/5 
+                        bg-gradient-to-b from-gray-400 to-gray-500
+                        text-gray-700 text-2xl font-normal ">
+                            <h1><span><%=baan.getTodayIncome()%></span></h1>
+                        </div>
+                    <%elsif baan.getTodayIncome() < 0%>
+                        <div class="flex items-center justify-center w-full h-2/5 
+                        bg-gradient-to-b from-red-400 to-red-500
+                        text-gray-50 text-2xl font-normal ">
+                            <h1><span><%=baan.getTodayIncome()%></span></h1>
+                        </div>
+                    <%else%>
+                        <div class="flex items-center justify-center w-full h-2/5 
+                        bg-gradient-to-b from-green-400 to-green-500
+                        text-gray-50 text-2xl font-normal ">
+                            <h1><span><%=baan.getTodayIncome()%></span></h1>
+                        </div>
+                    <%end%>
+                    
                 </div>
             <%end%>
         </div>
