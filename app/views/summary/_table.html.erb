@@ -1,0 +1,25 @@
+<!--Profit histories-->
+<table class="table-fixed border-collapse text-sm 
+border-b shadow-md border-gray-400 w-full mt-5">
+    <thead class="border-b-2 border-gray-300 shadow-md text-lg">
+        <tr class="border-b text-gray-700 dark:text-gray-50">
+            <th class="w-1/5">ลำดับ</th>
+            <th class="w-1/5">วันที่</th>
+            <th class="w-1/5">รายรับ</th>
+            <th class="w-1/5">รายจ่าย</th>
+            <th class="w-1/5">คงเหลือ</th>
+        </tr>
+    </thead>
+    
+    <tbody class="text-center text-gray-700 dark:text-gray-50 border-none">
+        <% @records.each_with_index do |r,index|%>
+            <tr class="">
+                <td class="py-4 text-center"><%=index+1%></td>
+                <td class="py-4 text-center"><%=r.created.strftime('%d/%m/%Y')%></td>
+                <td class="py-4"><%=r.income == nil ? '-':r.income%></td>
+                <td class="py-4"><%=r.outcome == nil ? '-':r.outcome%></td>
+                <td class="py-4"><%=r.result == nil ? '-':r.result%></td>
+            </tr>
+        <%end%>
+    </tbody>
+</table>

@@ -34,3 +34,4 @@ w4 = Wong.create(name: 'กลม4',baan_id: b2.id, wong_type: 'ดอกตา�
                 interest:1000,fee: 800, period: 30,start_date:Date.parse('2021-11-15'),
                 play_cycle: 30, paid: 8*1000, income: 10000
                 )
+s = Summary.create(wong_id: w3.id, created: Date.current)

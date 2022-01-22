@@ -1,4 +1,18 @@
 class SummaryController < ApplicationController
   def index
+    @start = selected_date(:start_date)
+    @end = selected_date(:end_date)
+    
+    #Display today
+    @records = Summary.where(created: @start..@end)
+    puts 'oooooooooooooo'
+    puts @records
+    puts 'oooooooooooooo'
+  end
+
+  private
+
+  def selected_date(symbol)
+      params[:select].present? && params[:select][symbol].present? ? Date.parse(params[:select][symbol]) : Date.current
   end
 end

@@ -28,22 +28,46 @@ class BaansharesController < ApplicationController
         end
     end
 
-    def pay
-        wong = Wong.find_by_id(params[:w_id])
-        if wong.paid == 0
-            payUpdated = wong.interest + wong.fee
-        else
-            payUpdated = wong.paid + wong.interest
-        end
-        if wong.update(paid: payUpdated,status: true)
-            flash[:success] = "ส่งยอดวง#{wong.name} เรียบร้อย!!"
-            wong.save!
-        else
-            notice[:error] = "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+    def pay(*args)
+        case args.size
+        when 0
+            wong = Wong.find_by_id(params[:w_id])
+            if wong.paid == 0
+                payUpdated = wong.interest + wong.fee
+            else
+                payUpdated = wong.paid + wong.interest
+            end
+            if wong.update(paid: payUpdated,status: true)
+                flash[:success] = "ส่งยอดวง#{wong.name} เรียบร้อย!!"
+                wong.save!
+            else
+                notice[:error] = "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+            end
+        when 1
+            args[0].each do |id|
+                wong = Wong.find_by_id(id)
+                if wong.paid == 0
+                    payUpdated = wong.interest + wong.fee
+                else
+                    payUpdated = wong.paid + wong.interest
+                end
+                if wong.update(paid: payUpdated,status: true)
+                    flash[:success] = "ส่งยอดวง#{wong.name} เรียบร้อย!!"
+                    wong.save!
+                else
+                    notice[:error] = "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
+                end
+            end
         end
         redirect_to baanshare_path(params[:id])
     end
+
     def pay_all
-        
+        baan = Baan.find_by_id(params[:id])
+        wongs = baan.getAllWong
+        puts 'pppppppppppppppppp'
+        puts baan.getAllWongIds(wongs)
+        puts 'pppppppppppppppppp'
+        pay(baan.getAllWongIds(wongs))
     end
 end

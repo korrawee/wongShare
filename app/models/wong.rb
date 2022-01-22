@@ -1,5 +1,6 @@
 class Wong < ApplicationRecord
     belongs_to :baan
+    has_many :summaries
     serialize :discount_tracking,Array
 
     before_create :setFirstDiscount
@@ -66,6 +67,7 @@ class Wong < ApplicationRecord
     def isActionDay()
         days = Wong.getDaysFromStart(id)
         if (days % period == 0)
+            status = false if status == true
             true
         else
             false

@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full">
     <%# Action bar %>
     <div class="flex justify-end my-3 ">
-        <%= button_to 'ส่งทั้งหมด', pay_all_baanshare_path, method: :post , remote: true,
+        <%= button_to 'ส่งทั้งหมด', pay_all_baanshare_path(wongs: @wongs), method: :post , remote: true,
         class: "min-w-max 
         transition-all duration-200 
         border rounded-sm border-8 border-green-500 
@@ -25,7 +25,6 @@
     <div class='contain'>
         <%=render partial: 'table', locals:{wongs:@wongs, baanId:@baanId}, class:'partial'%>
     </div>
-    
         <%= button_tag 'ลบ', class:'del-btn flex justify-end',data: {confirm: "ยืนยันการลบวง?"}, remote: true%>
 </div>
 <%= javascript_pack_tag 'selectall', 'data-turbolinks-track': 'reload' %>
