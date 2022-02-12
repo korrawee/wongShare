@@ -22,10 +22,10 @@ class WongsharesController < ApplicationController
   def update
     @wong = Wong.find_by_id(params[:id])
     if @wong.update(params.require(:wong).permit(:income))
+      createSummary(@wong)
       flash[:success] = 'อัพเดตดอกเบี้ยที่ได้รับเรียบร้อย!'
       redirect_to wongshare_path(params[:id],:baanId =>params[:baanId])
-    end
-    if @wong.update(params.require(:wong).permit(:name, :wong_type, :deposite, 
+    elsif @wong.update(params.require(:wong).permit(:name, :wong_type, :deposite, 
       :people, :interest, :fee, :fee_type, :income,
       :start_date, :period, :play_cycle))
       flash[:success] = 'แก้ไขข้อมูลสำเร็จ!!'
@@ -38,14 +38,16 @@ class WongsharesController < ApplicationController
 
   def new
     @wong = Wong.new()
-    @baanId = params[:baanId] if params[:baanId]
+    @baanId = params[:baanId] if params[:baanId].present?
     Wong.should_validate()
     if params[:wong]
       if @wong.update(params.required(:wong).permit(:name, :wong_type,
                                                   :deposite, :people, :interest,
                                                   :fee, :fee_type, :income, :start_date,
                                                   :period, :play_cycle,:baan_id))
-        @wong.save!   
+          
+        @wong.save! if createSummary(@wong)
+
         flash[:success] = "สร้างวง #{params[:name]} สำเร็จ !!!"
         redirect_to baanshare_path(@wong.baan_id)
         puts 'nnnnnnnnnnnnnnnnnnnn'
@@ -107,5 +109,22 @@ class WongsharesController < ApplicationController
   private
   def isNumeric(str)
     params[:bit] =~ /(0|[1-9][0-9]*)/
+  end
+
+  def createSummary(wong)
+    today = DateTime.current.in_time_zone('Asia/Bangkok')
+    sum = Summary.where(created: today).first
+    if sum.present? == false
+      income = wong.getTodayIncome
+      outcome = wong.getTodayPaid
+      result = wong.getTodayProfit
+      Summary.create!(created: today, income: income, outcome: outcome, result: result)
+    else
+      income = sum.income + wong.getTodayIncome
+      outcome = sum.outcome + wong.getTodayPaid
+      result = income - outcome
+      sum.update(income: income, outcome: outcome, result: result)
+      sum.save!
+    end
   end
 end
