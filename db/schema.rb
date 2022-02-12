@@ -48,14 +48,12 @@ ActiveRecord::Schema.define(version: 2022_01_22_112252) do
   end
 
   create_table "summaries", force: :cascade do |t|
-    t.integer "income"
-    t.integer "outcome"
-    t.integer "result"
+    t.integer "income", default: 0
+    t.integer "outcome", default: 0
+    t.integer "result", default: 0
     t.date "created"
-    t.integer "wong_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["wong_id"], name: "index_summaries_on_wong_id"
   end
 
   create_table "wongs", force: :cascade do |t|
