@@ -32,10 +32,16 @@ class BaansharesController < ApplicationController
         case args.size
         when 0
             wong = Wong.find_by_id(params[:w_id])
-            if wong.paid == 0
-                payUpdated = wong.interest + wong.fee
+            if wong.paid == 0 #ถ้ายังไม่เคยจ่าย
+                payUpdated = wong.interest
+                if wong.fee_type === "จ่ายงวดแรก"
+                    payUpdated += wong.fee
+                end
             else
                 payUpdated = wong.paid + wong.interest
+                if wong.fee_type === "จ่ายงวดรับเงิน" && wong.play_cycle == wong.getCurrentCycle
+                    payUpdated += wong.fee
+                end
             end
             if wong.update(paid: payUpdated,status: true)
                 flash[:success] = "ส่งยอดวง#{wong.name} เรียบร้อย!!"
