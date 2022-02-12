@@ -1,6 +1,5 @@
 class Wong < ApplicationRecord
     belongs_to :baan
-    has_many :summaries
     serialize :discount_tracking,Array
 
     before_create :setFirstDiscount
@@ -186,8 +185,8 @@ class Wong < ApplicationRecord
     #ดึงจำนวนวันตั้งแต่เร่ิมเล่นจนถึงปัจจุบัน
     def self.getDaysFromStart(wongId)
         dateTime = Wong.find_by_id(wongId).start_date
-        startDate = Date.parse(dateTime.to_s)
-        today = Date.parse(DateTime.now().to_s)
+        startDate = Date.parse(dateTime.in_time_zone('Asia/Bangkok').to_s)
+        today = Date.parse(DateTime.now().in_time_zone('Asia/Bangkok').to_s)
         days = (today - startDate).to_i
     end
 
