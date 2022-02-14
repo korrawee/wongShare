@@ -12,26 +12,34 @@ class BaansharesController < ApplicationController
         baan = Baan.find_by_id(@baanId)
         @wongs = baan.getAllWong
     end
-
+    def new 
+        @baan = Baan.new
+        if params[:baan]
+            if @baan.update(params.required(:baan).permit(:name, :tel,:account_id))
+                
+              @baan.save!
+      
+              flash[:success] = "สร้างบ้าน #{@baan.name} สำเร็จ !!!"
+              redirect_to baanshare_path(@baan.id)
+              puts 'nnnnnnnnnnnnnnnnnnnn'
+            end
+          end
+    end
     def delete
         @baanId = params[:id]
         baan = Baan.find_by_id(@baanId)        
-        puts '88888888888888'
-        puts params[:checked][0]
-        puts '88888888888888'       
-        baan.delete(params[:checked]) if params[:checked].length > 0
+        params[:w_ids] ||= []
+        baan.delete(params[:w_ids]) if params[:w_ids].length > 0
         @wongs = baan.getAllWong
-        respond_to do |format|
-            format.html {}
-            format.js {}
-            format.json {}
-        end
+        redirect_to baanshare_path(params[:id])
     end
 
     def pay(*args)
-        case args.size
-        when 0
+        if params[:b_id].present?
             wong = Wong.find_by_id(params[:w_id])
+            if wong.play_cycle == nil
+                wong.play_cycle = wong.getCurrentCycle
+            end
             if wong.paid == 0 #ถ้ายังไม่เคยจ่าย
                 payUpdated = wong.interest
                 if wong.fee_type === "จ่ายงวดแรก"
@@ -49,7 +57,8 @@ class BaansharesController < ApplicationController
             else
                 notice[:error] = "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
             end
-        when 1
+            redirect_to baanshare_path(params[:b_id])
+        else
             args[0].each do |id|
                 wong = Wong.find_by_id(id)
                 if wong.paid == 0
@@ -64,8 +73,8 @@ class BaansharesController < ApplicationController
                     notice[:error] = "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง"
                 end
             end
+            redirect_to baanshare_path(params[:id])
         end
-        redirect_to baanshare_path(params[:id])
     end
 
     def pay_all

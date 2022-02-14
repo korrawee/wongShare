@@ -12,7 +12,8 @@ Rails.application.routes.draw do
     end
   end
   get 'baanshares/:id', to: 'baanshares#show'
-  get 'baanshares/:id/delete', to: 'baanshares#delete'
+  post '/:id/delete', to: 'baanshares#delete'
+  post 'baanshares/new', to: 'baanshares#new'
   get 'summary/', to: "summary#index"
   get 'wongshare/new', to: 'wongshares#new'
   post '/wongshare/new/', to: 'wongshares#new'

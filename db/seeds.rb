@@ -3,35 +3,60 @@
 #
 # Examples:
 #
+
+a = Account.create(email: 'ronnawee.somyos@gmail.com', password: '111111')
+
+
+
+
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-a = Account.create(email: 'w@gmail.com', password: '111111')
-b1 = Baan.create(name: "แม่น้ำใส",account_id: a.id)
-b2 = Baan.create(name: 'กระเพราะป่า', account_id: a.id)
-b2 = Baan.create(name: 'บ้าน', account_id: a.id)
-b2 = Baan.create(name: 'บ้าน 1', account_id: a.id)
-b2 = Baan.create(name: 'บ้าน 2', account_id: a.id)
-b2 = Baan.create(name: 'บ้าน 3', account_id: a.id)
-b2 = Baan.create(name: 'บ้าน 4', account_id: a.id)
-b2 = Baan.create(name: 'บ้าน 5', account_id: a.id)
-w1 = Wong.create(name: 'กลม1',baan_id: b1.id, wong_type: 'บิทดอกตาม', 
-                fee_type: 'จ่ายงวดแรก', deposite: 35000, people: 35, 
-                interest:1000,fee: 800, period: 7,start_date:Date.today,
-                play_cycle: 30, paid: 0, income: 0
-                )
-w2 = Wong.create(name: 'กลม2',baan_id: b2.id, wong_type: 'บิทลดต้น', 
-                fee_type: 'จ่ายงวดแรก', deposite: 35000, people: 35, 
-                interest:1000,fee: 800, period: 30,start_date:Date.today,
-                play_cycle: 30, paid: 0, income: 0
-                )
-w3 = Wong.create(name: 'กลม3',baan_id: b1.id, wong_type: 'ขั้นบันได', 
-                fee_type: 'จ่ายงวดแรก', deposite: 35000, people: 35, 
-                interest:800,fee: 800, period: 7,start_date:Date.parse('2021-11-28'),
-                play_cycle: 30, paid: 6000
-                )
-w4 = Wong.create(name: 'กลม4',baan_id: b2.id, wong_type: 'ดอกตาม', 
-                fee_type: 'จ่ายงวดแรก', deposite: 35000, people: 35, 
-                interest:1000,fee: 800, period: 30,start_date:Date.parse('2021-11-15'),
-                play_cycle: 30, paid: 8*1000, income: 10000
-                )
-s = Summary.create(wong_id: w3.id, created: Date.current)
+# wong_type = ['ขั้นบันได', 'ดอกตาม', 'บิทดอกตาม', 'บิทลดต้น']
+# date_list = [Date.current.in_time_zone('Asia/Bangkok'),
+#             Date.yesterday.in_time_zone('Asia/Bangkok'),
+#             Date.tomorrow.in_time_zone('Asia/Bangkok')
+#         ]
+# depos_list = (10000..35000).step(5000).to_a
+# cycle_list = (1..25).to_a
+# b_list = []
+
+
+# a = Account.create(email: 'w@gmail.com', password: '111111')
+# 10.times{ |i|
+#     b = Baan.create(name: "บ้าน #{i}",account_id: a.id)
+#     b_list << b
+# }
+# b_list.each { |b|
+#     10.times { |i|
+#         depo = depos_list.sample
+#         people = depo/1000
+#         Wong.create(name: "วงที่ #{i}",baan_id: b.id, wong_type: wong_type.sample, 
+#         fee_type: 'จ่ายงวดแรก', deposite: depo, people: people, 
+#         interest:1000, fee: 800, period: 30, start_date: date_list.sample,
+#         play_cycle: cycle_list.sample, paid: 8*1000, income: 0
+#         )
+#     }
+# }
+
+
+# date_list.each { |d|
+#     baans = []
+#     b_list.each { |b|
+#         b.wongs.each{ |w|
+#             if w.start_date.strftime('%d%m%Y') === d.strftime('%d%m%Y')
+#                 baans << b
+#                 break
+#             end
+#         }
+
+#     }
+#     puts baans
+#     puts '-------------------'
+#     s = Summary.create(created: d)
+#     s.setAllIncome(baans)
+#     s.setAllOutcome(baans)
+#     s.save!
+#     baans = []
+# }
+
+
+

@@ -1,5 +1,5 @@
 class Wong < ApplicationRecord
-    belongs_to :baan
+    belongs_to :baan, touch: true
     serialize :discount_tracking,Array
 
     before_create :setFirstDiscount

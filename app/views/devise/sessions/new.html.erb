@@ -1,26 +1,58 @@
-<h2>Log in</h2>
+<div class='flex flex-col justify-center items-center 
+w-full h-screen 
+text-xl text-gray-700 
+'>
+  <div class= "flex flex-col
+    w-96 px-5 pb-5
+    border rounded-xl
+    shadow-md
+    dark:text-white
+  ">
+    <h1 class="w-full text-center text-2xl pt-10 tracking-wider">เข้าสู่ระบบ</h1>
+      <% if alert %>
+        <p class="alert w-full text-center 
+          p-2 mt-5
+          border rounded-md border-red-400">
+        <%= alert %>
+        </p>  
+      <%end%>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field py-5 font-bold">
+        <%= f.label :email, class: 'text-sm ' %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email",
+          class: 'w-full border-b-2 focus:border-green-500 
+          text-center text-md
+          outline-none bg-white dark:bg-gray-700 dark:text-gray-800 
+          py'
+        %>
+      </div>
+
+      <div class="field pb-5 font-bold">
+        <%= f.label :password, class: 'text-sm' %><br />
+        <%= f.password_field :password, autocomplete: "current-password", class: 'w-full text-md dark:text-gray-800' %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, class: '' %>
+        </div>
+      <% end %>
+
+      <div class="actions flex justify-center w-full mt-3">
+        <%= f.submit "เข้าสู่ระบบ", 
+          class: 'min-w-max 
+                transition-all duration-200 
+                border rounded-md border-8 border-green-500 
+                w-full p-2 my-5
+                cursor-pointer
+                bg-green-500
+                text-xl text-gray-100
+                hover:text-white hover:bg-green-600
+                shadow-md' %>
+      </div>
+    <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

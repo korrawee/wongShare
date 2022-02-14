@@ -1,0 +1,41 @@
+
+<div class="flex flex-col w-full my-5">
+    <div class="flex flex-row justify-between md:justify-center">
+        <h1 class="text-center text-2xl">สร้างบ้านใหม่</h1>
+        <%=link_to 'ยกเลิก', :back, class: '
+            md:absolute md:right-5
+            min-w-max 
+            transition-all duration-200 
+            border rounded-sm border-8 border-green-500 
+            px-8 mx-1 
+            cursor-pointer
+            bg-white
+            text-md text-gray-900
+            shadow-md'%>
+    </div>
+    <%= form_for @baan, url: new_baanshare_path(), local: true, class: "h-full" do |f| %>
+            <%= f.hidden_field :account_id, value: current_account.id%>
+            <div class="w-full my-5 text-gray-900 dark:text-white ">
+                <div class="flex flex-col w-full">
+                    <div class="flex flex-col mb-5">
+                        <%= f.label 'ชื่อบ้าน:', class: 'font-bold text-lg'%>
+                        <%= f.text_field :name, required: true, placeholder: "กรอกชื่อวง", class: 'border-b-2 focus:border-green-500 text-center outline-none bg-white dark:bg-gray-700 dark:text-gray-100 py' %>
+                    </div>
+                    <div class="flex flex-col mb-5">
+                        <%= f.label 'เบอร์มือถือ:', class: 'font-bold text-lg'%>
+                        <%= f.text_field :tel, placeholder: "กรอกเบอร์มือถือ", class: 'border-b-2 focus:border-green-500 text-center outline-none bg-white dark:bg-gray-700 dark:text-gray-100 py' %>
+                    </div>
+                </div>
+                <%= f.submit 'สร้างบ้าน', class: 'min-w-max 
+                    transition-all duration-200 
+                    border rounded-sm border-8 border-green-500 
+                    px-4 py-3
+                    cursor-pointer
+                    bg-green-500
+                    text-lg text-gray-100
+                    hover:text-white hover:bg-green-600
+                    shadow-md'
+                %>
+            </div>
+        <%end%>
+    </div>

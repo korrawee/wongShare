@@ -83,7 +83,6 @@ class Baan < ApplicationRecord
         end
         baanHaveAction
     end
-
     def self.getAllBaanOtherday(accId)
         baans = Baan.getAllBaanInAccount(accId)
         baanHaveAction = []

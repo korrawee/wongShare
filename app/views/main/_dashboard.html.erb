@@ -1,17 +1,17 @@
 <div class= "flex flex-col w-full ">
     <div class="flex flex-col md:flex-row text-gray-100 rounded-md overflow-hidden shadow-md">
         <div class="flex flex-col justify-end text-center md:w-1/3 h-3/4 bg-gradient-to-l from-blue-500 to-blue-600 ">
-            <h1 class="text-xl md:text-3xl md:pb-3">xx,xxx บาท</h1>
+            <h1 class="text-xl md:text-3xl md:pb-2"><%=summ.present? ? number_to_currency(summ.income, precision: 0, unit: "บาท", format: "%n %u") : "-"%></h1>
             <h1 class="text-right px-4 text-xl md:text-4xl">รายรับ</h1>
         </div>
         <div class="flex flex-col justify-end text-center md:mx-1 md:w-1/3 h-3/4 bg-yellow-400">
-            <h1 class="text-xl md:text-3xl md:pb-3">xx,xxx บาท</h1>
+            <h1 class="text-xl md:text-3xl md:pb-2"><%=summ.present? ? number_to_currency(summ.outcome, precision: 0, unit: "บาท", format: "%n %u") : "-"%></h1>
             <h1 class="text-right px-4 text-xl md:text-4xl">รายจ่าย</h1>
         </div>
         <div class="flex flex-col justify-end text-center md:w-1/3 h-3/4 bg-gradient-to-r from-green-500 to-green-600">
-            <h1 class="text-xl md:text-3xl md:pb-3">xx,xxx บาท</h1>
+            <h1 class="text-xl md:text-3xl md:pb-2"><%=summ.present? ? number_to_currency(summ.result, precision: 0, unit: "บาท", format: "%n %u") : "-"%></h1>
             <h1 class="text-right px-4 text-xl md:text-4xl">คงเหลือ</h1>
         </div>
     </div>
-    <h2 class="hidden md:block text-right m-4 ">ประจำวันที่ วว/ดด/ปปปป</h2>
+    <h2 class="hidden md:block text-right m-4 ">ประจำวันที่ <%= Date.current.in_time_zone('Bangkok').strftime('%d-%m-%Y')%></h2>
 </div>

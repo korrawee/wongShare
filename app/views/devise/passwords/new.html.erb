@@ -1,16 +1,36 @@
-<h2>Forgot your password?</h2>
+<div class='flex flex-col justify-center items-center 
+w-full h-screen
+text-xl text-gray-700
+'>
+  <div class= "flex flex-col p-5
+    border rounded-xl
+    dark:text-white
+  ">
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <h2 class="w-full text-center text-2xl">ลืมรหัสผ่าน</h2>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'dark:text-gray-800' %>
+      </div>
+
+      <div class="actions mt-3">
+        <%= f.submit "Send me reset password instructions", 
+          class: 'min-w-max 
+                transition-all duration-200 
+                border rounded-sm border-8 border-green-500 
+                px-4
+                cursor-pointer
+                bg-green-500
+                text-lg text-gray-100
+                hover:text-white hover:bg-green-600
+                shadow-md' %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
   </div>
-
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

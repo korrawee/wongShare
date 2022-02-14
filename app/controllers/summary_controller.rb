@@ -8,6 +8,7 @@ class SummaryController < ApplicationController
     puts 'oooooooooooooo'
     puts @records
     puts 'oooooooooooooo'
+    @summ = Summary.summary(@records)
   end
 
   private

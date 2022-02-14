@@ -16,9 +16,9 @@ border-b shadow-md border-gray-400 w-full mt-5">
             <tr class="">
                 <td class="py-4 text-center"><%=index+1%></td>
                 <td class="py-4 text-center"><%=r.created.strftime('%d/%m/%Y')%></td>
-                <td class="py-4"><%=r.income == 0 ? '-':r.income%></td>
-                <td class="py-4"><%=r.outcome == 0 ? '-':r.outcome%></td>
-                <td class="py-4"><%=r.result == 0 ? '-':r.result%></td>
+                <td class="py-4"><%=r.income == 0 ? '-':number_to_currency(r.income, precision: 0, unit: "", format: "%n %u")%></td>
+                <td class="py-4"><%=r.outcome == 0 ? '-':number_to_currency(r.outcome, precision: 0, unit: "", format: "%n %u")%></td>
+                <td class="py-4"><%=r.result == 0 ? '-':number_to_currency(r.result, precision: 0, unit: "", format: "%n %u")%></td>
             </tr>
         <%end%>
     </tbody>

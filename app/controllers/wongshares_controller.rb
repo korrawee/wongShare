@@ -96,10 +96,15 @@ class WongsharesController < ApplicationController
 
   def bit
     @wong = Wong.find_by_id(params[:id])
-    if @wong.update(params.require(:wong).permit(:bit))
+    if @wong.update(params.require(:wong).permit(:bit)) && params[:wong][:bit] != '0'
       @wong.save!
       flash[:success] = "บิทวง#{@wong.name} จำนวน #{@wong.bit} บาทสำเร็จ!!"
-      redirect_to pay_baanshare_path(w_id: @wong.id,id: params[:baanId]), method: :post
+      
+      if @wong.status == false
+        redirect_post pay_baanshare_path(w_id: @wong.id,b_id: params[:baanId]), options: {authenticity_token: :auto}
+      else
+        redirect_to baanshare_path(params[:baanId])
+      end
     else
       flash[:error] = "มีบางอย่างผิดพลาด กรุณาลองอีกครั้ง."
       redirect_to baanshare_path(params[:baanId])
@@ -112,7 +117,7 @@ class WongsharesController < ApplicationController
   end
 
   def createSummary(wong)
-    today = DateTime.current.in_time_zone('Asia/Bangkok')
+    today = Date.current.in_time_zone('Asia/Bangkok')
     sum = Summary.where(created: today).first
     if sum.present? == false
       income = wong.getTodayIncome

@@ -1,4 +1,5 @@
 class Summary < ApplicationRecord
+    default_scope { all } 
     def setAllIncome(baans)
         amount = 0
         baans.each do |b|
@@ -25,5 +26,11 @@ class Summary < ApplicationRecord
         update!(outcome: amount, result: income - amount)
     end
 
-
+    def self.summary(s_list)
+        summ = 0;
+        s_list.each{ |s|
+            summ += s.result
+        }
+        summ
+    end
 end
