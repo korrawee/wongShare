@@ -1,2 +1,4 @@
+rails runner 'Sidekiq.redis { |conn| conn.flushdb }'
+rails runner 'Sidekiq.redis { |conn| conn.flushall }'
 redis-server --daemonize yes
 bundle exec sidekiq
