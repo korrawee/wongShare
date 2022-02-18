@@ -1,21 +1,12 @@
 class SummaryJob < ApplicationJob
   queue_as :default
 
-  around_perform :around_cleanup
 
-  def perform(d)
-    ::Summary.create!(created: Date.parse(d))
-    puts 'performed====================='
+  def perform(d,acc_id)
+    puts 'START performed====================='
+    ::Summary.create!(created: Date.parse(d), account_id: acc_id)
+    puts "performed=====================#{acc_id}"
+
   end
 
-  private
-  def around_cleanup
-    # Do something before perform
-    puts 'BEFORE performed====================='
-    yield
-    # Do something after perform
-    puts 'AFTER performed====================='
-    seconds = ( DateTime.current.seconds_until_end_of_day + 5 ).seconds
-    SummaryJob.set(:wait => 1.minutes).perform_later(self.arguments.first)
-  end
 end

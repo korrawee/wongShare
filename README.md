@@ -9,8 +9,10 @@ Things you may want to cover:
 
 * System dependencies
 
-* Configuration
-
+* Configuration 
+    - run db (optinal)
+    - run redis
+    - run server 
 * Database creation
 
 * Database initialization

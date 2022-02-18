@@ -4,7 +4,7 @@ class SummaryController < ApplicationController
     @end = selected_date(:end_date)
     
     #Display today
-    @records = Summary.where(created: @start..@end)
+    @records = Summary.where(created: @start..@end, account_id: current_account.id)
     puts 'oooooooooooooo'
     puts @records
     puts 'oooooooooooooo'

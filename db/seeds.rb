@@ -4,7 +4,8 @@
 # Examples:
 #
 
-a = Account.create(email: 'ronnawee.somyos@gmail.com', password: '111111')
+a1 = Account.create(email: 'test1@gmail.com', password: '111111')
+a2 = Account.create(email: 'test2@gmail.com', password: '111111')
 
 
 

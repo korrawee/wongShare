@@ -123,7 +123,7 @@ class WongsharesController < ApplicationController
       income = wong.getTodayIncome
       outcome = wong.getTodayPaid
       result = wong.getTodayProfit
-      Summary.create!(created: today, income: income, outcome: outcome, result: result)
+      Summary.create!(created: today, income: income, outcome: outcome, result: result, account_id: current_account.id)
     else
       income = sum.income + wong.getTodayIncome
       outcome = sum.outcome + wong.getTodayPaid

@@ -48,8 +48,10 @@ ActiveRecord::Schema.define(version: 2022_01_22_112252) do
     t.integer "outcome", default: 0
     t.integer "result", default: 0
     t.date "created"
+    t.integer "account_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id"], name: "index_summaries_on_account_id"
   end
 
   create_table "wongs", force: :cascade do |t|
